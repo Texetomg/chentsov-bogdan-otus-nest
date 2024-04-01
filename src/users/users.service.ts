@@ -4,20 +4,45 @@ import { UpdateUserDto } from './dto/update-user.dto';
 
 @Injectable()
 export class UsersService {
+  private users = [
+    {
+      id: 1,
+      login: 'Biba',
+      name: 'Biba',
+      password: 123,
+    },
+    {
+      id: 2,
+      login: 'Boba',
+      name: 'Boba',
+      password: 123,
+    },
+  ];
+
   create(createUserDto: CreateUserDto) {
-    return 'This action adds a new user';
+    return {
+      id: this.users.length,
+      ...createUserDto,
+    };
   }
 
   findAll() {
-    return `This action returns all users`;
+    this.users;
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} user`;
+    const user = this.users.find((task) => task.id === id);
+    return user;
   }
 
   update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
+    const user = this.users.find((task) => task.id === id);
+    const newUser = {
+      ...user,
+      ...updateUserDto,
+    };
+
+    return newUser;
   }
 
   remove(id: number) {

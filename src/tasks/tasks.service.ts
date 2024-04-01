@@ -4,20 +4,42 @@ import { UpdateTaskDto } from './dto/update-task.dto';
 
 @Injectable()
 export class TasksService {
+  private tasks = [
+    {
+      id: 1,
+      name: 'Biba',
+      description: 'description',
+    },
+    {
+      id: 2,
+      name: 'Boba',
+      description: 'description',
+    },
+  ];
+
   create(createTaskDto: CreateTaskDto) {
-    return 'This action adds a new task';
+    return {
+      id: this.tasks.length,
+      ...createTaskDto,
+    };
   }
 
   findAll() {
-    return `This action returns all tasks`;
+    return this.tasks;
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} task`;
+    const task = this.tasks.find((task) => task.id === id);
+    return task;
   }
 
   update(id: number, updateTaskDto: UpdateTaskDto) {
-    return `This action updates a #${id} task`;
+    const task = this.tasks.find((task) => task.id === id);
+    const newTask = {
+      ...task,
+      ...updateTaskDto,
+    };
+    return newTask;
   }
 
   remove(id: number) {
