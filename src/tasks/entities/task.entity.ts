@@ -38,9 +38,9 @@ export class Task {
 
   @OneToOne(() => Solution, (solution) => solution.task)
   solution: Solution;
-  // ???
-  /* @Column()
-  examples: TExample[]; */
+
+  @Column({ type: 'json' })
+  examples: TExample[];
 
   @OneToOne(() => Discussion, (discussion) => discussion.task)
   discussions: Discussion[];
