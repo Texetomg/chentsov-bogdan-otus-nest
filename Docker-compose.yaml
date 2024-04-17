@@ -12,16 +12,12 @@ services:
       - db
   db:
     container_name: db
-    image: postgres:alpine
-    restart: always
+    image: postgres
+    volumes:
+      - pg-data:/var/lib/postgresql/data
     environment:
-      - POSTGRES_USER=      ${DATABASE_USER}
-      - POSTGRES_PASSWORD=  ${DATABASE_PASSWORD}
-      - POSTGRES_NAME=      ${DATABASE_NAME}
-      - POSTGRES_HOST=      ${DATABASE_HOST}
-      - POSTGRES_PORT=      ${DATABASE_PORT}
-    ports:
-       - "5432:5432"
-
+      POSTGRES_USER:      ${DATABASE_USER}
+      POSTGRES_PASSWORD:  ${DATABASE_PASSWORD}
+      POSTGRES_DB:        ${DATABASE_NAME}
 volumes:
-  pgdata: {}
+  pg-data:
