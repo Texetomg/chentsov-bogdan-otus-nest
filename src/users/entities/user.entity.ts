@@ -11,7 +11,7 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
-enum ERoles {
+export enum ERoles {
   USER = 'user',
   ADMIN = 'admin',
   INTERVIEWER = 'interviewer',
@@ -32,13 +32,10 @@ export class User {
   password: string;
 
   @Column()
-  role: string;
-
-  @Column()
   email: string;
 
   @Column({ type: 'enum', enum: ERoles, default: ERoles.USER })
-  roleEnum: ERoles;
+  role: ERoles;
 
   @OneToMany(() => Solution, (solution) => solution.user, {
     onDelete: 'CASCADE',
