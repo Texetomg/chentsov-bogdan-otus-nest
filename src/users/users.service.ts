@@ -5,10 +5,12 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { ERoles, User } from './entities/user.entity';
 import { Repository } from 'typeorm';
 import * as argon2 from 'argon2';
+import { JwtService } from '@nestjs/jwt';
 @Injectable()
 export class UsersService {
   constructor(
     @InjectRepository(User) private readonly userRepository: Repository<User>,
+    private readonly jwtService: JwtService,
   ) {}
   /* private users = [
     {
@@ -31,6 +33,7 @@ export class UsersService {
         email: createUserDto.email,
       },
     });
+
     if (existUser) throw new BadRequestException('User already exist');
     const user = await this.userRepository.save({
       email: createUserDto.email,
@@ -41,7 +44,11 @@ export class UsersService {
       rank: 0,
     });
 
-    return { user };
+    const token = this.jwtService.sign({
+      email: createUserDto.email,
+    });
+
+    return { user, token };
   }
 
   async findOne(email: string): Promise<User | undefined> {
