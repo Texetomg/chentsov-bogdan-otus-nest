@@ -43,14 +43,15 @@ export class UsersService {
 
     return { user };
   }
+
+  async findOne(email: string): Promise<User | undefined> {
+    return await this.userRepository.findOne({ where: { email } });
+  }
   /*  findAll() {
     this.users;
   }
 
-  findOne(id: number) {
-    const user = this.users.find((task) => task.id === id);
-    return user;
-  }
+ 
 
   update(id: number, updateUserDto: UpdateUserDto) {
     const user = this.users.find((task) => task.id === id);
