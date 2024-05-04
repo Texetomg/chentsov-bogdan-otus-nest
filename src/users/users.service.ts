@@ -12,20 +12,6 @@ export class UsersService {
     @InjectRepository(User) private readonly userRepository: Repository<User>,
     private readonly jwtService: JwtService,
   ) {}
-  /* private users = [
-    {
-      id: 1,
-      login: 'Biba',
-      name: 'Biba',
-      password: 123,
-    },
-    {
-      id: 2,
-      login: 'Boba',
-      name: 'Boba',
-      password: 123,
-    },
-  ]; */
 
   async create(createUserDto: CreateUserDto) {
     const existUser = await this.userRepository.findOne({
@@ -38,7 +24,6 @@ export class UsersService {
     const user = await this.userRepository.save({
       email: createUserDto.email,
       login: createUserDto.login,
-      name: createUserDto.name,
       password: await argon2.hash(createUserDto.password),
       role: ERoles.USER,
       rank: 0,
