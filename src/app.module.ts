@@ -10,6 +10,7 @@ import { SkillsModule } from './skills/skills.module';
 import { DiscussionsModule } from './discussions/discussions.module';
 import { CommentsModule } from './comments/comments.module';
 import { TagsModule } from './tags/tags.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -37,6 +38,7 @@ import { TagsModule } from './tags/tags.module';
     DiscussionsModule,
     CommentsModule,
     TagsModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],

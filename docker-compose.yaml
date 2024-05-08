@@ -1,0 +1,23 @@
+services:
+  backend:
+    container_name: backend
+    image: backend
+    build:
+      dockerfile: Dockerfile
+    ports:
+      - "80:3000"
+    depends_on:
+      - db
+  db:
+    container_name: db
+    image: postgres
+    volumes:
+      - pg-data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=$DATABASE_USER
+      - POSTGRES_PASSWORD=$DATABASE_PASSWORD
+      - POSTGRES_DB=$DATABASE_NAME
+    ports: 
+      - "5432:5432"
+volumes:
+  pg-data:

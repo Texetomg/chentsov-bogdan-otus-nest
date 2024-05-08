@@ -16,6 +16,11 @@ type TExample = {
   answer: string;
 };
 
+export enum EDifficulty {
+  EASY = 'easy',
+  MEDIUM = 'medium',
+  HARD = 'hard',
+}
 @Entity()
 export class Task {
   @PrimaryGeneratedColumn()
@@ -47,4 +52,7 @@ export class Task {
 
   @ManyToOne(() => User, (user) => user.tasks)
   user: User;
+
+  @Column({ type: 'enum', enum: EDifficulty })
+  difficulty: EDifficulty;
 }
