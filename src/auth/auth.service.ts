@@ -12,6 +12,7 @@ export class AuthService {
   ) {}
   async validateUser(email: string, password: string) {
     const user = await this.usersService.findOne(email);
+
     if (user && (await argon2.verify(user.password, password))) {
       return user;
     }
@@ -19,11 +20,11 @@ export class AuthService {
   }
 
   async login(user: IUser) {
-    const { id, email } = user;
+    const { id, email, login } = user;
     return {
       id,
       email,
-      token: this.jwtService.sign({ id, email }),
+      token: this.jwtService.sign({ id, email, login }),
     };
   }
 }

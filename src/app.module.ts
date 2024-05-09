@@ -7,7 +7,6 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { SolutionsModule } from './solutions/solutions.module';
 import { SkillsModule } from './skills/skills.module';
-import { DiscussionsModule } from './discussions/discussions.module';
 import { CommentsModule } from './comments/comments.module';
 import { TagsModule } from './tags/tags.module';
 import { AuthModule } from './auth/auth.module';
@@ -35,7 +34,6 @@ import { AuthModule } from './auth/auth.module';
     UsersModule,
     SolutionsModule,
     SkillsModule,
-    DiscussionsModule,
     CommentsModule,
     TagsModule,
     AuthModule,

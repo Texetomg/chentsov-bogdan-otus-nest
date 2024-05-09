@@ -1,48 +1,66 @@
-import { Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
-import { EDifficulty } from './entities/task.entity';
+import { Task } from './entities/task.entity';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class TasksService {
-  private tasks = [
-    {
-      id: 1,
-      name: '1137. N-th Tribonacci Number',
-      description: 'description',
-      difficulty: EDifficulty.EASY,
-    },
-    {
-      id: 2,
-      name: 'Two Sum',
-      description: 'description',
-      difficulty: EDifficulty.EASY,
-    },
-  ];
+  constructor(
+    @InjectRepository(Task) private readonly taskRepository: Repository<Task>,
+  ) {}
 
-  create(createTaskDto: CreateTaskDto) {
-    return {
-      id: this.tasks.length,
-      ...createTaskDto,
-    };
+  async create(createTaskDto: CreateTaskDto) {
+    const existTask = await this.taskRepository.findOne({
+      where: {
+        name: createTaskDto.name,
+      },
+    });
+
+    if (existTask) throw new BadRequestException('Task already exist');
+
+    const task = await this.taskRepository.save({
+      name: createTaskDto.name,
+      description: createTaskDto.description,
+      difficulty: createTaskDto.difficulty,
+      rating: createTaskDto.rating || 0,
+      constraints: createTaskDto.constraints || [],
+      examples: createTaskDto.examples || [],
+      comments: [],
+    });
+
+    return { task };
   }
 
   findAll() {
-    return this.tasks;
+    return this.taskRepository.find({
+      select: {
+        id: true,
+        name: true,
+        description: true,
+        difficulty: true,
+      },
+    });
   }
 
-  findOne(id: number) {
-    const task = this.tasks.find((task) => task.id === id);
-    return task;
+  async findOne(id: number): Promise<Task | undefined> {
+    return await this.taskRepository.findOne({ where: { id } });
   }
 
-  update(id: number, updateTaskDto: UpdateTaskDto) {
-    const task = this.tasks.find((task) => task.id === id);
-    const newTask = {
-      ...task,
-      ...updateTaskDto,
-    };
-    return newTask;
+  async update(id: number, updateTaskDto: UpdateTaskDto) {
+    const task = await this.taskRepository.findOne({
+      where: { id },
+    });
+    if (!task) {
+      throw new NotFoundException('Task not found');
+    }
+
+    return await this.taskRepository.update(id, updateTaskDto);
   }
 
   remove(id: number) {

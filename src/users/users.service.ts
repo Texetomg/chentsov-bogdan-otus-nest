@@ -1,6 +1,5 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ERoles, User } from './entities/user.entity';
 import { Repository } from 'typeorm';
@@ -39,23 +38,4 @@ export class UsersService {
   async findOne(email: string): Promise<User | undefined> {
     return await this.userRepository.findOne({ where: { email } });
   }
-  /*  findAll() {
-    this.users;
-  }
-
- 
-
-  update(id: number, updateUserDto: UpdateUserDto) {
-    const user = this.users.find((task) => task.id === id);
-    const newUser = {
-      ...user,
-      ...updateUserDto,
-    };
-
-    return newUser;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} user`;
-  } */
 }

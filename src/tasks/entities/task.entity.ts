@@ -1,17 +1,18 @@
-import { Discussion } from 'src/discussions/entities/discussion.entity';
+import { Comment } from 'src/comments/entities/comment.entity';
 import { Solution } from 'src/solutions/entities/solution.entity';
 import { Tag } from 'src/tags/entities/tag.entity';
 import { User } from 'src/users/entities/user.entity';
 import {
   Column,
   Entity,
+  JoinColumn,
   ManyToOne,
   OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
-type TExample = {
+export type TExample = {
   text: string;
   answer: string;
 };
@@ -33,25 +34,22 @@ export class Task {
   description: string;
 
   @Column()
-  rating: number;
+  rating?: number;
 
   @Column('text', { array: true })
-  constraints: string[];
+  constraints?: string[];
 
   @OneToMany(() => Tag, (tag) => tag.task)
-  tags: Tag[];
+  tags?: Tag[];
 
-  @OneToOne(() => Solution, (solution) => solution.task)
-  solution: Solution;
+  @OneToMany(() => Solution, (solution) => solution.task)
+  solutions?: Solution[];
 
   @Column({ type: 'json' })
-  examples: TExample[];
+  examples?: TExample[];
 
-  @OneToOne(() => Discussion, (discussion) => discussion.task)
-  discussions: Discussion[];
-
-  @ManyToOne(() => User, (user) => user.tasks)
-  user: User;
+  @OneToMany(() => Comment, (comment) => comment.task)
+  comments?: Comment[];
 
   @Column({ type: 'enum', enum: EDifficulty })
   difficulty: EDifficulty;

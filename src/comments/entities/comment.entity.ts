@@ -1,4 +1,4 @@
-import { Discussion } from 'src/discussions/entities/discussion.entity';
+import { Task } from 'src/tasks/entities/task.entity';
 import { User } from 'src/users/entities/user.entity';
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 
@@ -10,8 +10,8 @@ export class Comment {
   @ManyToOne(() => User, (user) => user.comments)
   user: User;
 
-  @ManyToOne(() => Discussion, (discussion) => discussion.comments)
-  discussion: Discussion;
+  @ManyToOne(() => Task, (task) => task.comments)
+  task: Task;
 
   @Column()
   value: string;

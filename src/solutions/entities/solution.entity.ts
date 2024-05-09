@@ -1,12 +1,6 @@
 import { Task } from 'src/tasks/entities/task.entity';
 import { User } from 'src/users/entities/user.entity';
-import {
-  Column,
-  Entity,
-  ManyToOne,
-  OneToOne,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class Solution {
@@ -19,7 +13,7 @@ export class Solution {
   @ManyToOne(() => User, (user) => user.solutions)
   user: User;
 
-  @OneToOne(() => Task, (task) => task.solution)
+  @ManyToOne(() => Task, (task) => task.solutions)
   task: Task;
 
   @Column()
