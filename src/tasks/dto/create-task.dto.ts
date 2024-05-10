@@ -14,7 +14,7 @@ export class CreateTaskDto {
   @IsNotEmpty()
   difficulty: EDifficulty;
 
-  rating: number;
+  rating?: number;
 
   constraints: string[];
 

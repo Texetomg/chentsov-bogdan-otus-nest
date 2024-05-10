@@ -1,6 +1,12 @@
 import { Task } from 'src/tasks/entities/task.entity';
 import { User } from 'src/users/entities/user.entity';
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity()
 export class Comment {
@@ -18,4 +24,7 @@ export class Comment {
 
   @Column()
   rating: number;
+
+  @CreateDateColumn({ name: 'created_at' })
+  createdAt!: Date;
 }

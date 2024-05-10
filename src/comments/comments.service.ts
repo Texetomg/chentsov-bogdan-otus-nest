@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Req } from '@nestjs/common';
 import { CreateCommentDto } from './dto/create-comment.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Comment } from './entities/comment.entity';
@@ -11,12 +11,16 @@ export class CommentsService {
     private readonly commentRepository: Repository<Comment>,
   ) {}
 
-  async create(createCommentDto: CreateCommentDto) {
+  async create(
+    createCommentDto: CreateCommentDto,
+    userId: number,
+    taskId: number,
+  ) {
     const comment = await this.commentRepository.save({
-      task: createCommentDto.task,
-      user: createCommentDto.user,
+      task: { id: taskId },
+      user: { id: userId },
       value: createCommentDto.value,
-      rating: createCommentDto.rating,
+      rating: 0,
     });
 
     return { comment };
