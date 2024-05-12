@@ -28,12 +28,33 @@ export class SolutionsService {
     return { solution };
   }
 
-  async findByTask(userId: number, taskId: number) {
+  async findOneByTask(userId: number, taskId: number) {
     const solution = await this.solutionRepository.findOne({
       where: {
         task: {
           id: taskId,
         },
+        user: {
+          id: userId,
+        },
+      },
+    });
+    if (!solution) {
+      throw new NotFoundException('Solution not found');
+    }
+    return { solution };
+  }
+
+  async findAllByUser(userId: number) {
+    const solution = await this.solutionRepository.find({
+      relations: ['task'],
+      select: {
+        task: {
+          id: true,
+          name: true,
+        },
+      },
+      where: {
         user: {
           id: userId,
         },

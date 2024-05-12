@@ -16,6 +16,11 @@ import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 @Controller('solutions')
 export class SolutionsController {
   constructor(private readonly solutionsService: SolutionsService) {}
+  @Get('user')
+  @UseGuards(JwtAuthGuard)
+  findAllByUser(@Req() req) {
+    return this.solutionsService.findAllByUser(+req.user.id);
+  }
 
   @Post(':id')
   @UseGuards(JwtAuthGuard)
@@ -29,8 +34,8 @@ export class SolutionsController {
 
   @Get(':id')
   @UseGuards(JwtAuthGuard)
-  findOne(@Req() req, @Param('id') id: string) {
-    return this.solutionsService.findByTask(+req.user.id, +id);
+  findOneByTask(@Req() req, @Param('id') id: string) {
+    return this.solutionsService.findOneByTask(+req.user.id, +id);
   }
 
   @Patch(':id')
