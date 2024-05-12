@@ -1,20 +1,11 @@
 import { Comment } from 'src/comments/entities/comment.entity';
 import { Solution } from 'src/solutions/entities/solution.entity';
 import { Tag } from 'src/tags/entities/tag.entity';
-import { User } from 'src/users/entities/user.entity';
-import {
-  Column,
-  Entity,
-  JoinColumn,
-  ManyToOne,
-  OneToMany,
-  OneToOne,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 export type TExample = {
-  text: string;
-  answer: string;
+  input: string;
+  output: string;
 };
 
 export enum EDifficulty {

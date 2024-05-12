@@ -1,6 +1,5 @@
 import { IsNotEmpty } from 'class-validator';
 import { EDifficulty, TExample } from '../entities/task.entity';
-import { Comment } from 'src/comments/entities/comment.entity';
 
 export class CreateTaskDto {
   id: number;
@@ -19,6 +18,4 @@ export class CreateTaskDto {
   constraints: string[];
 
   examples: TExample[];
-
-  comments?: Comment[];
 }
