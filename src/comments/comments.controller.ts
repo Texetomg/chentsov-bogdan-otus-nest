@@ -4,7 +4,6 @@ import {
   Post,
   Body,
   Param,
-  Delete,
   UseGuards,
   Req,
 } from '@nestjs/common';
@@ -22,18 +21,12 @@ export class CommentsController {
     @Req() req,
     @Param('id') id: string,
   ) {
-    return this.commentsService.create(createCommentDto, req.user.id, +id);
+    return this.commentsService.create(createCommentDto, +req.user.id, +id);
   }
 
   @Get(':id')
   @UseGuards(JwtAuthGuard)
   findByTask(@Param('id') id: string) {
     return this.commentsService.findByTask(+id);
-  }
-
-  @Delete(':id')
-  @UseGuards(JwtAuthGuard)
-  remove(@Param('id') id: string) {
-    return this.commentsService.remove(+id);
   }
 }

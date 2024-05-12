@@ -7,9 +7,6 @@ export class Solution {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
-  name: string;
-
   @ManyToOne(() => User, (user) => user.solutions)
   user: User;
 
@@ -17,5 +14,5 @@ export class Solution {
   task: Task;
 
   @Column()
-  desription: string;
+  value: string;
 }

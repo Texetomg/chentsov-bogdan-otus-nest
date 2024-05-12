@@ -1,4 +1,4 @@
-import { Injectable, Req } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { CreateCommentDto } from './dto/create-comment.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Comment } from './entities/comment.entity';
@@ -26,10 +26,6 @@ export class CommentsService {
     return { comment };
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} comment`;
-  }
-
   async findByTask(id: number) {
     return await this.commentRepository.find({
       relations: ['user'],
@@ -45,9 +41,5 @@ export class CommentsService {
         },
       },
     });
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} comment`;
   }
 }
