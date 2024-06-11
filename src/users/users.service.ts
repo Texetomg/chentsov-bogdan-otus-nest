@@ -35,7 +35,22 @@ export class UsersService {
     return { user, token };
   }
 
+  async findAll() {
+    return this.userRepository.find({
+      select: {
+        id: true,
+        login: true,
+        email: true,
+        role: true,
+      },
+    });
+  }
+
   async findOne(email: string): Promise<User | undefined> {
     return await this.userRepository.findOne({ where: { email } });
+  }
+
+  async findOneById(id: number): Promise<User | undefined> {
+    return await this.userRepository.findOne({ where: { id } });
   }
 }
