@@ -1,10 +1,15 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ERoles, User } from './entities/user.entity';
 import { Repository } from 'typeorm';
 import * as argon2 from 'argon2';
 import { JwtService } from '@nestjs/jwt';
+import { UpdateUserDto } from './dto/update-user.dto';
 @Injectable()
 export class UsersService {
   constructor(
@@ -52,5 +57,21 @@ export class UsersService {
 
   async findOneById(id: number): Promise<User | undefined> {
     return await this.userRepository.findOne({ where: { id } });
+  }
+
+  async update(id: number, updateTaskDto: UpdateUserDto) {
+    const task = await this.userRepository.findOne({
+      where: { id },
+    });
+    if (!task) {
+      throw new NotFoundException('Task not found');
+    }
+
+    return await this.userRepository.update(id, updateTaskDto);
+  }
+
+  async remove(id: number) {
+    const task = await this.findOneById(id);
+    return await this.userRepository.remove(task);
   }
 }
