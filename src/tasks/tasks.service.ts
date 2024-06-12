@@ -63,7 +63,8 @@ export class TasksService {
     return await this.taskRepository.update(id, updateTaskDto);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} task`;
+  async remove(id: number) {
+    const task = await this.findOne(id);
+    return await this.taskRepository.remove(task);
   }
 }

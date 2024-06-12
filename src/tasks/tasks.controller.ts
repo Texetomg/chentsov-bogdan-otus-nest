@@ -12,9 +12,13 @@ import { TasksService } from './tasks.service';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Task } from './entities/task.entity';
+import { Repository } from 'typeorm';
 
 @Controller('tasks')
 export class TasksController {
+  @InjectRepository(Task) private readonly taskRepository: Repository<Task>;
   constructor(private readonly tasksService: TasksService) {}
 
   @Post()
