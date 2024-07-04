@@ -42,6 +42,11 @@ export class UsersController {
     return this.usersService.update(+id, updateUserDto);
   }
 
+  @Patch(':id/rank')
+  updateRank(@Param('id') id: string, @Body() updateUserDto: { rank: number }) {
+    return this.usersService.updateRank(+id, updateUserDto);
+  }
+
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.usersService.remove(+id);

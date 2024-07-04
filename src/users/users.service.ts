@@ -47,6 +47,7 @@ export class UsersService {
         login: true,
         email: true,
         role: true,
+        rank: true,
       },
     });
   }
@@ -59,19 +60,30 @@ export class UsersService {
     return await this.userRepository.findOne({ where: { id } });
   }
 
-  async update(id: number, updateTaskDto: UpdateUserDto) {
-    const task = await this.userRepository.findOne({
+  async update(id: number, updateUserDto: UpdateUserDto) {
+    const user = await this.userRepository.findOne({
       where: { id },
     });
-    if (!task) {
-      throw new NotFoundException('Task not found');
+    if (!user) {
+      throw new NotFoundException('User not found');
     }
 
-    return await this.userRepository.update(id, updateTaskDto);
+    return await this.userRepository.update(id, updateUserDto);
+  }
+
+  async updateRank(id: number, updateUserDto: { rank: number }) {
+    const user = await this.userRepository.findOne({
+      where: { id },
+    });
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+
+    return await this.userRepository.update(id, updateUserDto);
   }
 
   async remove(id: number) {
-    const task = await this.findOneById(id);
-    return await this.userRepository.remove(task);
+    const user = await this.findOneById(id);
+    return await this.userRepository.remove(user);
   }
 }
